@@ -7,6 +7,7 @@ import glob
 import librosa
 import os
 from models import Generator, Discriminator
+import argparse
 
 def label_img(img, label):
     newimg = []
@@ -47,7 +48,7 @@ def convdataset(filepaths):
         datas[i] = datas[i][:minmin]
     return datas
   
-def train(epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_cycle, datasets, datapath, checkpoint=True, checkpointpath, n_checkpoint=500):
+def train(args):##epoch, datapath, checkpoint=True, checkpointpath, n_checkpoint=500
     """
     datasets : (labels, (batches, x, y, channels))
     """
@@ -56,10 +57,10 @@ def train(epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_
     lr_d = 0.000014
     lr_g = 0.0002
     
-    if checkpoint:
-      net_G.load_state_dict(torch.load('./drive/MyDrive/net_G.pth'))
+    if args.checkpoint:
+      net_G.load_state_dict(torch.load(args.checkpointpath+'/net_G.pth'))
       net_G.eval()
-      net_D = torch.load('./drive/MyDrive/net_D.pth')
+      net_D = torch.load(args.checkpointpath+'/net_D.pth')
       net_D.eval()
     else:
       net_G = Generator(2, 1, 3).to(device)
@@ -70,7 +71,7 @@ def train(epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_
 
     criterion_GAN = nn.BCELoss()
     criterion_cycle = nn.L1Loss()
-    
+    datasets = convdataset(args.datapath)
     print(len(datasets[0]))
     net_G.train()
     net_D.train()
@@ -79,7 +80,7 @@ def train(epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_
     loss_train_G_epoch = 0
     loss_train_cycle_epoch = 0
     lossesses = []
-    for e in range(epoch):
+    for e in range(args.epoch):
         for i in range(len(datasets[0])):
             iimg = random.randint(1,len(datasets))
             ict = random.randint(1,len(datasets))
@@ -129,10 +130,10 @@ def train(epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_
             optimizerG.step()
             lossesses.append([loss_train_cycle_epoch,loss_train_D_epoch,loss_train_G_epoch])
             items += 1
-            print("\r", 'epoch:'+str(e)+'/'+str(epoch)+', item:'+str(i)+'/'+str(len(datasets[0])), end="")
-            if items % checkpoint == (checkpoint - 1):
-                torch.save(net_G.state_dict(), checkpointpath+'/net_G.pth')
-                torch.save(net_D, checkpointpath+'/net_D.pth')
+            print("\r", 'epoch:'+str(e)+'/'+str(args.epoch)+', item:'+str(i)+'/'+str(len(datasets[0])), end="")
+            if items % args.n_checkpoint == (args.n_checkpoint - 1):
+                torch.save(net_G.state_dict(), args.checkpointpath+'/net_G.pth')
+                torch.save(net_D, args.checkpointpath+'/net_D.pth')
                 ndata = np.loadtxt(datapath+"/data.csv",delimiter=',').tolist()
                 lossessess = []
                 for i23 in ndata:
@@ -148,3 +149,15 @@ def train(epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_
                         lossesses = []
                     else:
                         fi +=1
+                        
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    #epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_cycle, datasets, datapath, checkpoint=True, checkpointpath, n_checkpoint=500
+    parser.add_argument('--epoch', type=int, default=100, help='epoch for train')
+    parser.add_argument('--datapath', type=str, help='path for dataset folder')
+    parser.add_argument('--checkpoint', type=bool, default=True, help='resume train from pretrained model or not')
+    parser.add_argument('--checkpointpath', type=str, help='path for checkpoint folder')
+    parser.add_argument('--n_checkpoint', type=int, default=500, help='model save frequency per item')
+    
+    args = parser.parse_args()
+    train(args)
