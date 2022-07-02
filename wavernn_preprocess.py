@@ -9,7 +9,7 @@ import librosa
 import numpy as np
 from tqdm import tqdm
 
-from config import Config as cfg
+from wavernn_config import Config as cfg
 
 
 def _compute_melspectrogram(wav):
