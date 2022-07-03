@@ -5,15 +5,15 @@ class Config:
     dataset = "ljspeech"
 
     # Audio processing parameters
-    sampling_rate = 22050
+    sampling_rate = 44100
     max_db = 100
     ref_db = 20
 
     n_fft = 2048
-    win_length = 1100  # 50 ms window length
-    hop_length = 275  # 12.5 ms frame shift
+    win_length = None
+    hop_length = int(12750/255)  
 
-    num_mels = 80
+    num_mels = 256
     fmin = 50
 
     num_bits = 10  # Bit depth of the signal
@@ -29,7 +29,7 @@ class Config:
     num_steps = 200000
     sample_frames = 24
     learning_rate = 4e-4
-    lr_scheduler_step_size = 25000
+    lr_scheduler_step_size = 500
     lr_scheduler_gamma = 0.5
-    checkpoint_interval = 25000
+    checkpoint_interval = 500
     num_workers = 8
