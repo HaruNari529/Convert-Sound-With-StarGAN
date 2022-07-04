@@ -59,9 +59,9 @@ def train(args):##epoch, datapath, checkpoint=True, checkpointpath, n_checkpoint
     
     if args.checkpoint:
       net_G = Generator(2, 1, 3).to(device)
-      net_G.load_state_dict(torch.load(args.checkpointpath+'/net_G.pth'))
+      net_G.load_state_dict(torch.load(args.checkpointpath+'/net_G.pth',map_location=device))
       net_G.eval()
-      net_D = torch.load(args.checkpointpath+'/net_D.pth')
+      net_D = torch.load(args.checkpointpath+'/net_D.pth',map_location=device)
       net_D.eval()
     else:
       net_G = Generator(2, 1, 3).to(device)
@@ -76,6 +76,8 @@ def train(args):##epoch, datapath, checkpoint=True, checkpointpath, n_checkpoint
     print(len(datasets[0]))
     net_G.train()
     net_D.train()
+    
+    
     items = 0
     loss_train_D_epoch = 0
     loss_train_G_epoch = 0
@@ -135,7 +137,7 @@ def train(args):##epoch, datapath, checkpoint=True, checkpointpath, n_checkpoint
             if items % args.n_checkpoint == (args.n_checkpoint - 1):
                 torch.save(net_G.state_dict(), args.checkpointpath+'/net_G.pth')
                 torch.save(net_D, args.checkpointpath+'/net_D.pth')
-                ndata = np.loadtxt(datapath+"/data.csv",delimiter=',').tolist()
+                ndata = np.loadtxt(checkpointpath+"/data.csv",delimiter=',').tolist()
                 lossessess = []
                 for i23 in ndata:
                     lossessess.append(i23)
@@ -144,8 +146,8 @@ def train(args):##epoch, datapath, checkpoint=True, checkpointpath, n_checkpoint
                 filesaved = False
                 fi = 0
                 while not filesaved:
-                    if os.path.exists(datapath+"/data.csv"):
-                        np.savetxt(datapath+"/data.csv", lossesses, delimiter=',')
+                    if os.path.exists(checkpointpath+"/data.csv"):
+                        np.savetxt(checkpointpath+"/data.csv", lossesses, delimiter=',')
                         filesaved = True
                         lossesses = []
                     else:
