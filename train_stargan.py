@@ -6,7 +6,7 @@ import random
 import glob
 import librosa
 import os
-from models import Generator, Discriminator
+from models.stargan import Generator, Discriminator
 import argparse
 
 def label_img(img, label):
@@ -58,6 +58,7 @@ def train(args):##epoch, datapath, checkpoint=True, checkpointpath, n_checkpoint
     lr_g = 0.0002
     
     if args.checkpoint:
+      net_G = Generator(2, 1, 3).to(device)
       net_G.load_state_dict(torch.load(args.checkpointpath+'/net_G.pth'))
       net_G.eval()
       net_D = torch.load(args.checkpointpath+'/net_D.pth')
