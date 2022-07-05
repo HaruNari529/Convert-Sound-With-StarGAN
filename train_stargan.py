@@ -157,7 +157,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     #epoch, net_G, net_D, optimizerG, optimizerD, criterion_GAN, criterion_cycle, datasets, datapath, checkpoint=True, checkpointpath, n_checkpoint=500
     parser.add_argument('--epoch', type=int, default=100, help='epoch for train')
-    parser.add_argument('--datapath', type=str, help='path for dataset folder')
+    parser.add_argument('--datapath', type=list, help='paths for dataset folder')
     parser.add_argument('--checkpoint', type=bool, default=True, help='resume train from pretrained model or not')
     parser.add_argument('--checkpointpath', type=str, help='path for checkpoint folder')
     parser.add_argument('--n_checkpoint', type=int, default=500, help='model save frequency per item')
