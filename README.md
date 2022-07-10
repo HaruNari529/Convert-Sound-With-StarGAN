@@ -2,15 +2,23 @@
 
 Converting audio using StarGAN and WaveRNN
 
-# Getting started
 ## Train StarGAN
 ### 0. prepare dataset
 
 prepare .wav file that you want to train with and put in folder like below:
 ```
-<dataset_folder> ──┬── <category1> ── soundfile1.wav
-                   ├── <category2> ── soundfile2.wav
-                   ├── <categpry3> ── soundfile3.wav
+<dataset_folder> ──┬── <category1> ─┬─ soundfile1_1.wav
+                   │                ├─ soundfile1_2.wav
+                   │                ...
+                   ├── <category2> ─┬─ soundfile2_1.wav
+                   │                ├─ soundfile2_2.wav
+                   │                ...
+                   ├── <categpry3> ─┬─ soundfile3_1.wav
+                   │                ├─ soundfile3_2.wav
+                   │                ...
                    ...
 ```
-### 1. training
+### 1. download gitcode
+```
+
+```
