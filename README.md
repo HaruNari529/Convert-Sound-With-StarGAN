@@ -26,5 +26,5 @@ cd Convert-Sound-With-StarGAN/
 ```
 Install python packages:
 ```
-pip install 
+pip install torch==1.11.0 numpy==0.8.1 librosa==1.21.6
 ```
