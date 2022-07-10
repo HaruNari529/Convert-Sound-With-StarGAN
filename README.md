@@ -37,3 +37,31 @@ python train_stargan.py \
     --checkpointpath <path to save your trained models> \
     --n_checkpoint <model save frequency per items>
 ```
+## train WaveRNN
+### 0. Download dataset
+
+- LJSpeech (en): https://keithito.com/LJ-Speech-Dataset/
+
+### 1. download codes
+Clone this repository:
+```
+git clone https://github.com/HaruNari529/Convert-Sound-With-StarGAN.git
+cd Convert-Sound-With-StarGAN/
+```
+### 2. Preprocessing
+```
+python wavernn_preprocess.py \
+        --dataset_dir <Path to the dataset dir (Location where the dataset is downloaded)>\
+        --out_dir <Path to the output dir (Location where processed dataset will be written)>
+```
+
+The preprocessing code currently supports the following datasets:
+- LJSpeech (en)
+
+### 3. Training
+```
+python train_wavernn.py \
+     --train_data_dir <Path to the dir containing the data to train the model> \
+     --checkpoint_dir <Path to the dir where the training checkpoints will be saved> \
+     --resume_checkpoint_path <If specified load checkpoint and resume training from that point>
+```
