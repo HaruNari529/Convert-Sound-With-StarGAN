@@ -28,3 +28,12 @@ Install python packages:
 ```
 pip install torch==1.11.0 numpy==0.8.1 librosa==1.21.6
 ```
+### 2. train StarGAN
+```
+python train_stargan.py \
+    --epoch <enter the epoch in integer> \
+    --datapath <enter paths for datasets e.g. /category1 /category2 ...> \
+    --checkpoint <resume train or not, type in bool> \
+    --checkpointpath <path to save your trained models> \
+    --n_checkpoint <model save frequency per items>
+```
