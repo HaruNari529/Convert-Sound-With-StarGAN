@@ -37,7 +37,7 @@ python train_stargan.py \
     --checkpointpath <path to save your trained models> \
     --n_checkpoint <model save frequency per items>
 ```
-## train WaveRNN
+## Train WaveRNN
 ### 0. Download dataset
 
 - LJSpeech (en): https://keithito.com/LJ-Speech-Dataset/
@@ -65,3 +65,8 @@ python train_wavernn.py \
      --checkpoint_dir <Path to the dir where the training checkpoints will be saved> \
      --resume_checkpoint_path <If specified load checkpoint and resume training from that point>
 ```
+## Acknowledgements
+
+The code in this repository is based on the code in the following repositories
+1. [clovaai/stargan-v2](https://github.com/clovaai/stargan-v2)
+2. [anandaswarup/WaveRnn](https://github.com/anandaswarup/waveRNN)
