@@ -18,7 +18,13 @@ prepare .wav file that you want to train with and put in folder like below:
                    │                ...
                    ...
 ```
-### 1. download gitcode
+### 1. download codes
+Clone this repository:
 ```
-
+git clone https://github.com/HaruNari529/Convert-Sound-With-StarGAN.git
+cd Convert-Sound-With-StarGAN/
+```
+Install python packages:
+```
+pip install 
 ```
