@@ -7,8 +7,8 @@ import numpy as np
 import soundfile as sf
 import torch
 
-from config import Config as cfg
-from model import WaveRNN
+from wavernn_config import Config as cfg
+from model.wavernn import WaveRNN
 
 
 def generate(checkpoint_path, eval_data_dir, out_dir):
