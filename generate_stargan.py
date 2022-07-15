@@ -55,7 +55,7 @@ def generate(args):
             newimg.append([])
             for l in range(256):
                 newimg[e].append(genimg[i][e][l])
-    np.save('mels', np.asarray(newimg))
+    np.save(args.generatepath+'mels', np.asarray(newimg))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -63,6 +63,7 @@ if __name__ == '__main__':
     parser.add_argument('--label', type=int, default=100, help='index number that you want to convert image to')
     parser.add_argument('--wavpath', type=list, help='paths for wav file')
     parser.add_argument('--checkpointpath', type=str, help='path for model')
+    parser.add_argument('--generatepath', type=str, help='path for putting generated image')
     
     args = parser.parse_args()
     generate(args)
