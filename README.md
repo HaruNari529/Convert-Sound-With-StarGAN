@@ -65,6 +65,36 @@ python train_wavernn.py \
      --checkpoint_dir <Path to the dir where the training checkpoints will be saved> \
      --resume_checkpoint_path <If specified load checkpoint and resume training from that point>
 ```
+## Convert audio
+### 0. prepare models and audio files
+prepare .wav file that you want to convert and model that you are using and put in folder like below:
+```
+<generate folder> ──┬── <wavfolder> ─── soundfile.wav
+                    ├── <generatefolder> 
+                    └── <checkpointfolder> ─┬─ net_G.pth
+                                            ├─ net_D.pth
+                                            └─ wavernn.pth
+```
+### 1. Clone repository
+```
+git clone https://github.com/HaruNari529/Convert-Sound-With-StarGAN.git
+cd Convert-Sound-With-StarGAN/
+```
+### 2. Generate melspectrogram
+```
+python generate_stargan.py \
+     --label <index number that you want to convert image to in integer> \
+     --wavpath <paths for wav file> \
+     --checkpointpath <path for whre models saved> \
+     --generatepath <path for putting generated image>
+```
+### 3. generate .wav file
+```
+python generate.py \
+    --checkpoint_path <Path to the checkpoint to use to instantiate the model> \
+    --eval_data_dir <Path to the generate folder> \ 
+    --out_dir <Path to the generate folder>
+```
 ## Acknowledgements
 
 The code in this repository is based on the code in the following repositories
